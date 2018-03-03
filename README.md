@@ -1,5 +1,7 @@
-# ADCSF supplementary matterial #
+# ADCSF supplementary matterial # 
 <update> Sat 03 Mar 2018 08:45:04 AM GMT 
+
+[https://cvrleyva.wordpress.com/2015/11/25/adcsf/]
 
 This code is meant to detect abnormal event detection in video (robberies, accidents, car crashes, etc). 
 The intructions are divided as follows:
