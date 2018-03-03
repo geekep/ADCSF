@@ -1,8 +1,7 @@
-# adcsf
 # ADCSF supplementary matterial #
 <update> Sat 03 Mar 2018 08:45:04 AM GMT 
 
-This code is meant to test abnormal event detection in video. 
+This code is meant to detect abnormal event detection in video (robberies, accidents, car crashes, etc). 
 The intructions are divided as follows:
 
 1. Required dependencies
@@ -12,7 +11,7 @@ The intructions are divided as follows:
 5. Usage
 6. Considerations
 
-=========================================================================================================
+=========================================================================================
 1. Required dependencies
 - We use MATLAB R2016b computer vision package, older versions that contain this package should work as well.
 - <update> We use the background extractor provided by the _mexopencv-Master_ tool of
@@ -28,7 +27,7 @@ however, we provide the package, but you refer and _thank_ to that site.
 install as follows opening the terminal:
 $ sudo apt-get install libav-tools
 
-=========================================================================================================
+=========================================================================
 2. Datasets 
 - Datsets are listed on the paper, our code is aimed to process video not images as it was originally given.
 - It is necessary to convert images to avi files to test the code. We recomend _ffmpeg_ or _avconv_ to this end (see comments about compression). 
@@ -66,7 +65,8 @@ for i in *.mp4; do avconv -i "$i" -vcodec [rawvideo] "out-$i"; done
 for instance "rawvideo" and "rgb24 or YUV" pixel formats. The detection should not be that different among codecs using our 
 pre-trained model, however it is advised to extract features and construct the model all over again.
 
-=========================================================================================================
+=======================================================================
+
 3. Contents
 - The main folder TIP-ADCSF has two subfolders
 * DATA: 
@@ -82,13 +82,15 @@ pre-trained model, however it is advised to extract features and construct the m
 > VIDEO.m is the class container to handle video formats
 > MISC.m is the class container with aditional functions no related with the method but visualisation
 
-=========================================================================================================
+========================================================
+
 4. Demo
 - open check.m to verify that all depencies are met before execute any other function.
 - add the _mexopencv-Master_ path in Line 4 of P1.m and LV.m
 - P1.m and LV.m are able to execute the respective demos, just open and run
 
-=========================================================================================================
+========================================================
+
 5. Usage
 - Each individual code has its own commented lines, due to its size only general comments are
 provided here. The parameters that influence at most the detection are outside the LIB folder
@@ -103,7 +105,8 @@ creating one single database .mat file as it is LVparms.m
 and P1Tr.mat (i.e. train and test files)
 > The code automatically will use the file path and number of frames specified for those files
 
-=========================================================================================================
+========================================================
+
 6. Considerations <update>
 - We use parallel MATLAB support only to speed up the model's training, it can be remove replacing parfor -> for 
 it has nothing to do wih the frame processing time.
@@ -116,7 +119,5 @@ Thus some functions might have different default setups.
 - The method was tested under OS linux lubuntu 14.04, CPU intel i5 and 16GB of RAM. This guide was written under a linux-based distribution scope, 
 more precisely debian. Unfortunately we lack experience to address bugs or any problem that could emerge in non-linux OS, we will provide
  only linux OS help regarding execution problems, we apologise.
- <update> we tested this code on Windows7. We successfuly installed _opencv 2.4.10_ following this tutorial:
- [url][http://www.learnopencv.com/install-opencv3-on-windows/] 
-
-
+ <update> we tested this code on Windows7. We successfully installed _opencv 2.4.10_ following this tutorial:
+ [http://www.learnopencv.com/install-opencv3-on-windows/] 
