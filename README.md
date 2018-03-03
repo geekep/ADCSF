@@ -11,7 +11,8 @@ The intructions are divided as follows:
 5. Usage
 6. Considerations
 
-=========================================================================================
+===================================================================================
+
 1. Required dependencies
 - We use MATLAB R2016b computer vision package, older versions that contain this package should work as well.
 - <update> We use the background extractor provided by the _mexopencv-Master_ tool of
@@ -28,11 +29,12 @@ install as follows opening the terminal:
 $ sudo apt-get install libav-tools
 
 =========================================================================
+
 2. Datasets 
 - Datsets are listed on the paper, our code is aimed to process video not images as it was originally given.
 - It is necessary to convert images to avi files to test the code. We recomend _ffmpeg_ or _avconv_ to this end (see comments about compression). 
 - We do not provide third parties datasets, libraries or code.
-- <update> The examples are here [https://yadi.sk/d/KcyrIAei3Sxubt]. Download and unzip them. 
+- <update> The examples are here [https://yadi.sk/d/KcyrIAei3Sxubt]. Download and unzip them. FUll dataset [https://yadi.sk/d/NHvx4hXa3GvagQ]
 - <update> check these files inside /DATA/Sample/ folder i.e. Tr11.avi Te36.avi and gTe36.avi used for demo purposes.
 - <update> [Linux] Our dataset is available on the site and our provided code has bash script converter to open any video format in 
 MATLAB (avconv by default). To properly work firstly check if widely used formats decoders, e.g. h264, are installed e.g.:
