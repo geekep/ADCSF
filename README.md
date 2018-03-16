@@ -1,4 +1,4 @@
-# ADCSF supplementary matterial # 
+# ADCSF supplementary material # 
 <update> Sat 03 Mar 2018 08:45:04 AM GMT 
 
 [https://cvrleyva.wordpress.com/2015/11/25/adcsf/]
