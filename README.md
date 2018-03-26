@@ -36,7 +36,7 @@ $ sudo apt-get install libav-tools
 - Datsets are listed on the paper, our code is aimed to process video not images as it was originally given.
 - It is necessary to convert images to avi files to test the code. We recomend _ffmpeg_ or _avconv_ to this end (see comments about compression). 
 - We do not provide third parties datasets, libraries or code.
-- <update> The examples are here [https://yadi.sk/d/KcyrIAei3Sxubt]. Download and unzip them. FUll dataset [https://yadi.sk/d/NHvx4hXa3GvagQ]
+- <update> The examples are here [https://yadi.sk/d/KcyrIAei3Sxubt]. Download and unzip them. FUll dataset [https://cvrleyva.wordpress.com/2017/04/08/lv-dataset/]
 - <update> check these files inside /DATA/Sample/ folder i.e. Tr11.avi Te36.avi and gTe36.avi used for demo purposes.
 - <update> [Linux] Our dataset is available on the site and our provided code has bash script converter to open any video format in 
 MATLAB (avconv by default). To properly work firstly check if widely used formats decoders, e.g. h264, are installed e.g.:
