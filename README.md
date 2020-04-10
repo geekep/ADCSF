@@ -40,10 +40,10 @@ Codecs:
  ...I.. = Intra frame-only codec
  ....L. = Lossy compression
  .....S = Lossless compression
-DEV.L. mpeg1video           MPEG-1 video (decoders: mpeg1video mpeg1video_vdpau )
-DEV.L. mpeg2video           MPEG-1 video (decoders: mpeg2video mpegvideo_vdpau ) < supported-decoder >
-D.V.L. mpegvideo_xvmc       MPEG-1/2 video XvMC (X-Video Motion Compensation) < no-supported-encoder >
-... etc ....
+ DEV.L. mpeg1video           MPEG-1 video (decoders: mpeg1video mpeg1video_vdpau )
+ DEV.L. mpeg2video           MPEG-1 video (decoders: mpeg2video mpegvideo_vdpau ) < supported-decoder >
+ D.V.L. mpegvideo_xvmc       MPEG-1/2 video XvMC (X-Video Motion Compensation) < no-supported-encoder >
+ ... etc ....
 ```
 The check.m file do this process automatically, we recommend to convert all videos into mjpeg or rawvideo format as:
 > avconv -i [input] -vcodec rawvideo [output]
