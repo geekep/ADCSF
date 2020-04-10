@@ -1,3 +1,4 @@
+% PERS.m is the class container with functions to generate the active cells.
 classdef PERS
  
  properties(Constant)

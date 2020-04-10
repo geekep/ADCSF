@@ -1,3 +1,4 @@
+% VIDEO.m is the class container to handle video formats.
 classdef VIDEO
  
  methods(Static = true)

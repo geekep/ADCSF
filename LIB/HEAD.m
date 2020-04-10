@@ -1,3 +1,4 @@
+% HEAD.m is the class container with functions required by the method.
 classdef HEAD
  properties(Constant)
   minrho = 0.9;

@@ -1,3 +1,4 @@
+% MISC.m is the class container with functions related to visualisation.
 classdef MISC
  
  methods(Static = true)

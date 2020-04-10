@@ -1,3 +1,4 @@
+% HOF.c is the function to generate HOF descriptor.
 classdef HOF
  
  properties(Constant)
