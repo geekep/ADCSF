@@ -18,7 +18,7 @@ The intructions are divided as follows:
 - After installing _opencv 2.4.10_ proceed to install _mexopencv-Master_, the tool is now available in /LIB/mexopencv-master.zip 
 + 1.1 unzip mexopencv-master.zip
 + 1.2 follow this instructions for you operating system ./LIB/mexopencv-master/README.markdown
-- [Linux] We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
+- `Linux` We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
 > $ sudo apt-get install libav-tools
 ---
 
