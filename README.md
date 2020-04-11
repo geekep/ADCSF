@@ -16,9 +16,9 @@ The intructions are divided as follows:
 - We use the background extractor provided by the _mexopencv-Master_ tool of (https://github.com/opencv/opencv_contrib/tree/master/modules/matlab) this will require _opencv 2.4.10_ however, we provide the package, but you refer and _thank_ to that site.
 - install opencv 2.4.10, follow the instructions here for your respective OS (https://opencv.org/releases.html)
 - After installing _opencv 2.4.10_ proceed to install _mexopencv-Master_, the tool is now available in /LIB/mexopencv-master.zip 
-`1.1 unzip mexopencv-master.zip`
-`1.2 follow this instructions for you operating system ./LIB/mexopencv-master/README.markdown`
-- [Linux] We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
+`unzip mexopencv-master.zip`
+`follow this instructions for you operating system ./LIB/mexopencv-master/README.markdown`
+- `Linux` We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
 > $ sudo apt-get install libav-tools
 ---
 
@@ -28,7 +28,7 @@ The intructions are divided as follows:
 - We do not provide third parties datasets, libraries or code.
 - The examples are here (https://yadi.sk/d/KcyrIAei3Sxubt). Download and unzip them. FUll dataset (https://cvrleyva.wordpress.com/2017/04/08/lv-dataset/)
 - check these files inside /DATA/Sample/ folder i.e. Tr11.avi, Te36.avi and gTe36.avi used for demo purposes.
-- [Linux] Our dataset is available on the site and our provided code has bash script converter to open any video format in MATLAB (avconv by default). To properly work firstly check if widely used formats decoders, e.g. h264, are installed e.g.:
+- `Linux` Our dataset is available on the site and our provided code has bash script converter to open any video format in MATLAB (avconv by default). To properly work firstly check if widely used formats decoders, e.g. h264, are installed e.g.:
 > $ avconv -codecs
 ```
 Codecs:
@@ -59,13 +59,13 @@ for i in *.mp4
 ## 3. Contents
 The main folder TIP-ADCSF has two subfolders: DATA and LIB.
 
-### 3.1 DATA
+### 3.1. DATA
 + it contains one pre-trained model to identify abnormal events of the UCSDP1 and LV dataset
 + it contains the UCSDP1 test files and train files in .mat file cell
 + it contains the LV dataset file names and number of frames used
 + it contains two videos from those datasets to run the demo
 
-### 3.1 LIB
+### 3.2. LIB
 It contains the functions requried by the method and video processing.
 + HEAD.m is the class container with functions required by the method as a whole
 + PERS.m is the class container with functions to generate the active cells (see appendix)
