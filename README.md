@@ -16,9 +16,9 @@ The intructions are divided as follows:
 - We use the background extractor provided by the _mexopencv-Master_ tool of (https://github.com/opencv/opencv_contrib/tree/master/modules/matlab) this will require _opencv 2.4.10_ however, we provide the package, but you refer and _thank_ to that site.
 - install opencv 2.4.10, follow the instructions here for your respective OS (https://opencv.org/releases.html)
 - After installing _opencv 2.4.10_ proceed to install _mexopencv-Master_, the tool is now available in /LIB/mexopencv-master.zip 
-+ 1.1 unzip mexopencv-master.zip
-+ 1.2 follow this instructions for you operating system ./LIB/mexopencv-master/README.markdown
-- `Linux` We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
+`1.1 unzip mexopencv-master.zip`
+`1.2 follow this instructions for you operating system ./LIB/mexopencv-master/README.markdown`
+- [Linux] We need h264 codec support to read the LV videos, _libav-tools_ should provided the preamble install as follows opening the terminal:
 > $ sudo apt-get install libav-tools
 ---
 
@@ -81,7 +81,7 @@ It contains the functions requried by the method and video processing.
 ---
 
 ## 5. Usage
-- Testing different data is as follows:
+Testing different data is as follows:
 + If the video is a single piece and contains both abnormal and normal behaviour, we create one single database .mat file.
 + If is a set of videos proceed, we create two database files as it is P1Te.mat and P1Tr.mat (i.e. train and test files).
 + The code automatically will use the file path and number of frames specified for those files.
