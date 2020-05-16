@@ -1,11 +1,11 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
 addpath(genpath(strcat(pwd,'/DATA')))
-%addpath(genpath('where is mexopencv-master'))
+addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
 
 load('P1Tr.mat')
 load('P1Te.mat')
-load('P1Mdl.mat')
+% load('P1Mdl.mat')
 
 MISC.dockStyle;
 
@@ -15,6 +15,7 @@ file = 'Tr11.avi';
 
 % Generate active cells and FG extractor
 fgbg = VIDEO.getfgbgmask(file,1e-2,200,visualise);
+% fgbg = VIDEO.getfgbgmask(file,1e-3,200,visualise);
 [ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
 
 %{

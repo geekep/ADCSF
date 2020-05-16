@@ -130,8 +130,8 @@ classdef ANOMALY
    plot(X,Y)
    ylabel('True Positive Rate')
    xlabel('False Positive Rate')
-   title('ROC for Classification by Logistic Regression')
-   %disp(AUC)
+   title('ROC for Abnormal Event Detection')
+   disp(AUC)
    
   end
   

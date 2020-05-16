@@ -5,17 +5,16 @@ classdef VIDEO
    
   function fgbg = getfgbgmask(varargin)
    file = varargin{1};
-   lr   = varargin{2};%learning rate
-   flr  = varargin{3};% frames for learning
+   lr   = varargin{2};    % learning rate
+   flr  = varargin{3};    % frames for learning
    vis  = varargin{4};
    
-   fgbg = cv.BackgroundSubtractorMOG();
+   fgbg = cv.BackgroundSubtractorMOG2();
    
-   videoFReader = vision.VideoFileReader(file,'ImageColorSpace','Intensity');
+   videoFReader = vision.VideoFileReader(file, 'ImageColorSpace','Intensity');
    step(videoFReader);
    
-   scale = isequal(videoFReader.info.VideoSize,[HEAD.scX,HEAD.scY]);
-   
+   scale = isequal(videoFReader.info.VideoSize,[HEAD.scX,HEAD.scY]); 
    if ~ scale
     X = videoFReader.info.VideoSize(1);
     Y = videoFReader.info.VideoSize(2);
@@ -35,9 +34,9 @@ classdef VIDEO
     if scale
      I = I(sc{1},sc{2});
     end
-    B = fgbg.apply(uint8(255*I),'LearningRate', lr);
+    B = fgbg.apply(uint8(255*I), 'LearningRate',lr);
     if vis
-     step(videoPlayer,[B,I])
+     step(videoPlayer, [B,I])
      pause(0.05)
     end
    end
@@ -46,14 +45,15 @@ classdef VIDEO
   
   function testfgbgmask(varargin)
    file = varargin{1};
-   lr   = varargin{2};%learning rate
-   fgbg = varargin{3};% gmm model
+   lr   = varargin{2};    % learning rate
+   fgbg = varargin{3};    % gmm model
    scale = false;
    if nargin > 3
     scale = true;
     sc = varargin{4};
    end
-   videoFReader = vision.VideoFileReader(file,'ImageColorSpace','Intensity');
+   
+   videoFReader = vision.VideoFileReader(file, 'ImageColorSpace','Intensity');
    videoPlayer = vision.VideoPlayer;
    
    while ~isDone(videoFReader)
@@ -61,8 +61,8 @@ classdef VIDEO
     if scale
      I = I(sc{1},sc{2});
     end
-    B = fgbg.apply(uint8(255*I),'LearningRate', lr);
-    step(videoPlayer,[B,I])
+    B = fgbg.apply(uint8(255*I), 'LearningRate',lr);
+    step(videoPlayer, [B,I])
     pause(0.05)
    end
   end

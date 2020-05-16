@@ -24,14 +24,14 @@ classdef HEAD
    n      = varargin{5};
    fgbg   = varargin{6};
    lr     = varargin{7};
-   vis    = varargin{8};% visualize
+   vis    = varargin{8};   % visualize
    
    extOF = ext.extOF;
    extFB = ext.extFB;
    
    if nargin > 8
-    sf = varargin{9};% start frame
-    ef = varargin{10};% end frame
+    sf = varargin{9};      % start frame
+    ef = varargin{10};     % end frame
    else
     sf = 1;
     ef = Inf;
