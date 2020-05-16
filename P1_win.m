@@ -1,67 +1,75 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
-addpath(genpath(strcat(pwd,'/DATA')))
+addpath(genpath(strcat(pwd,'/DATA/ped1')))
 addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
-
-load('P1Tr.mat')
-load('P1Te.mat')
-% load('P1Mdl.mat')
 
 MISC.dockStyle;
 
-visualise = true;
+%% Train stage
+load('P1Tr.mat')
 
-file = 'Tr11.avi';
-
-% Generate active cells and FG extractor
-fgbg = VIDEO.getfgbgmask(file,1e-2,200,visualise);
-% fgbg = VIDEO.getfgbgmask(file,1e-3,200,visualise);
-[ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
-
-%{
-% Feature extraction and model generation
-n = 0;
 for k = 1:size(P1Tr,1)
- File = P1Tr{k};
- disp(File)
- [OFbag,FBbag,n] = HEAD.extract4VID(File,OFbag,FBbag,ext,n,fgbg,1e-3,visualise);
- clc
+
+	File = P1Tr{k};
+
+	visualise = true;
+
+	% FG extractor
+	% Learning rate is set to 0.02.
+    % The number of frames for modeling background is set to 200.
+	fgbg = VIDEO.getfgbgmask(file,1e-2,200,visualise);
+
+	% Generate active cells
+	[ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
+	
+	% Feature extraction
+	n = 0;
+	[OFbag,FBbag,n] = HEAD.extract4VID(File,OFbag,FBbag,ext,n,fgbg,1e-3,visualise);
+	
+	% Model generation
+	Mdl = HEAD.genMdlstr(OFbag,FBbag,map);
+	models = [models, Mdl]
+
 end
 
-Mdl = HEAD.genMdlstr(OFbag,FBbag,map);
-%}
+% Save model
+save(models, 'P1Mdl.mat')
 
+%% Test stage
+load('P1Te.mat')
+load('P1Mdl.mat')
+R = cell(size(P1Te,1),1);
 th = struct;
-th.th_of = 6.5;
-th.th_fg = 90;
+th.th_of = 6.5;     % optical flow model threshold
+th.th_fg = 90;      % foreground occupancy model threshold
 
-TestFile = P1Te{36,1};
-gTestFile = P1Te{36,2};
+for k = 1:length(R)
 
-[GTD,CAD,IAD] = HEAD.AnomalyDetection(TestFile,gTestFile,Mdl,ext,th,visualise,fgbg,1e-3);
-[TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
+	File  = P1Te{k,1};     % test file
+	gFile = P1Te{k,2};     % groundtruth file
+	Mdl   = P1Mdl{k};      % model
 
+	% FG extractor
+	% Learning rate is set to 0.03.
+    % The number of frames for modeling background is set to 200.
+	fgbg = VIDEO.getfgbgmask(file,1e-3,200,visualise);
 
-% Full test
-%{
-R = cell(36,1);
+	% Generate active cells
+	[ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
 
-for k = 1:size(P1Te,1)
+	% Anomaly detection
+	[GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
+		th, visualise, fgbg, 1e-3);
  
- [GTD,CAD,IAD] = HEAD.AnomalyDetection(P1Te{k,1},P1Te{k,2},Mdl,ext,th,visualise,fgbg,1e-3);
- 
- [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
- 
- R{k} = [TPR,FPR];
- 
- clc
+	% Performance evaluation
+	[TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
+	R{k} = [TPR,FPR]
  
 end
 
+%% Draw ROC
 R = cell2mat(R);
 TPR = R(:,1);
 FPR = R(:,2);
-
 AUC = ANOMALY.ROCanalysis(TPR,FPR);
-title(strcat(num2str(th_of),'/',num2str(th_fg),'/',num2str(AUC)))
-%}
+title(strcat(num2str(th.th_of),'/',num2str(th.th_fg),'/',num2str(AUC)))
