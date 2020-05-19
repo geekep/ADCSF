@@ -128,12 +128,12 @@ classdef HEAD
      
   function [GTD,CAD,IAD] = AnomalyDetection(varargin)
    
-   file = varargin{1};% video file name
-   gfile= varargin{2};% video file name GT
-   Mdl  = varargin{3};% Model struct
-   ext  = varargin{4};% window extension (perpective correction)
-   th   = varargin{5};% anomaly threshold
-   vis  = varargin{6};% visualize
+   file = varargin{1};     % video file name
+   gfile= varargin{2};     % video file name GT
+   Mdl  = varargin{3};     % model struct
+   ext  = varargin{4};     % window extension (perpective correction)
+   th   = varargin{5};     % anomaly threshold
+   vis  = varargin{6};     % visualize
    fgbg = varargin{7};
    lr   = varargin{8};
    
@@ -156,14 +156,14 @@ classdef HEAD
     ef = Inf;
    end
    
-   GTD = zeros(1e5,1);% Ground    Truth   Detected
-   CAD = zeros(1e5,1);% Correct   Anomaly Detected
-   IAD = zeros(1e5,1);% Incorrect Anomaly Detected
+   GTD = zeros(1e5,1);      % groundtruth detected
+   CAD = zeros(1e5,1);      % correct anomaly detected
+   IAD = zeros(1e5,1);      % incorrect anomaly detected
    
-   videoFReader1 = vision.VideoFileReader(which(file),'ImageColorSpace','Intensity');
+   videoFReader1 = vision.VideoFileReader(which(file), 'ImageColorSpace','Intensity');
    step(videoFReader1);
    
-%    videoFWriter = vision.VideoFileWriter('out.avi','FrameRate',30);
+%   videoFWriter = vision.VideoFileWriter('out.avi','FrameRate',30);
 
    scale = isequal(videoFReader1.info.VideoSize,[HEAD.scX,HEAD.scY]);
    
@@ -178,14 +178,14 @@ classdef HEAD
    end
    
    try
-    videoFReader2 = vision.VideoFileReader(which(gfile),'ImageColorSpace','Intensity');
+    videoFReader2 = vision.VideoFileReader(which(gfile), 'ImageColorSpace','Intensity');
     step(videoFReader2);
     gtmask = true;
    catch
     if scale
      J = true(numel(scy),numel(scx));
     end
-    gtmask = false;% no ground truth
+    gtmask = false;        % no groundtruth
    end
    
    if vis
@@ -233,7 +233,7 @@ classdef HEAD
     
     O = estimateFlow(of,In);
     O = O.Vx + 1j * O.Vy;
-    %O = O.Magnitude + 1j*O.Orientation;
+    % O = O.Magnitude + 1j*O.Orientation;
     O = double(O+1j*eps);
     I = abs(Ip-In);
     
@@ -324,9 +324,9 @@ classdef HEAD
       J = Frames{4}(:,:,3);
       x = and(M,J);
       y = and(M,~J);
-      GTD(k) = sum(J(:));% Ground    Truth
-      CAD(k) = sum(x(:));% Correct   Anomaly Detected
-      IAD(k) = sum(y(:));% Incorrect Anomaly Detected
+      GTD(k) = sum(J(:));     % groundtruth
+      CAD(k) = sum(x(:));     % correct anomaly detected
+      IAD(k) = sum(y(:));     % incorrect anomaly detected
      else
       CAD(k) = 1;
      end

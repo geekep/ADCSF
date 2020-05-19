@@ -106,11 +106,8 @@ classdef ANOMALY
   function [TPR,FPR] = CorrectDetectionRate(GTD,CAD,IAD,th)
    
    TP = sum(CAD >= th * GTD + eps);
-   
    FN = numel(GTD) - TP;
-   
    FP = sum(and(GTD == 0, IAD > 0));
-   
    TN = numel(GTD) - FP;
    
    TPR = TP/(TP+FN+eps);

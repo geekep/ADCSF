@@ -1,29 +1,30 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
-addpath(genpath(strcat(pwd,'/DATA/ped1')))
+addpath(genpath(strcat(pwd,'/DATA/Avenue')))
 addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
 
 MISC.dockStyle;
 visualise = true;
 
 %% Prepare
-load('P1Tr.mat')
+load('AvenueTr.mat')
 % FG extractor
 % Learning rate is set to 0.02.
 % The number of frames for modeling background is set to 200.
-fgbg = VIDEO.getfgbgmask(P1Tr{11},1e-2,200,visualise);
+fgbg = VIDEO.getfgbgmask(AvenueTr{1}, 1e-2, 200, visualise);
 
 % Generate active cells
 [ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
 
 %% Train stage
 n = 0;
-for k = 1:size(P1Tr,1)
+for k = 1:size(AvenueTr,1)
 
-	File = P1Tr{k};
-
+	File = AvenueTr{k};
+	
 	% Feature extraction
-	[OFbag,FBbag,n] = HEAD.extract4VID(File,OFbag,FBbag,ext,n,fgbg,1e-3,visualise);
+	[OFbag,FBbag,n] = HEAD.extract4VID(File, OFbag, FBbag, ext, n, fgbg, ...
+        1e-3, visualise);
     
 end
 
@@ -31,21 +32,21 @@ end
 Mdl = HEAD.genMdlstr(OFbag,FBbag,map);
 
 % Save model
-save(strcat(pwd,'/DATA/ped1/P1Mdl.mat'), 'Mdl')
+save(strcat(pwd,'/DATA/Avenue/AvenueMdl.mat'), 'Mdl')
 
 %% Test stage
-load('P1Te.mat')
-load('P1Mdl.mat')
+load('AvenueTe.mat')
+load('AvenueMdl.mat'); % load model
 
 th = struct;
 th.th_of = 6.5;     % optical flow model threshold
 th.th_fg = 90;      % foreground occupancy model threshold
-R = cell(size(P1Te,1),1);
+R = cell(size(AvenueTe,1),1);
 
 for k = 1:length(R)
 
-	File  = P1Te{k,1};     % test file
-	gFile = P1Te{k,2};     % groundtruth file
+	File  = AvenueTe{k,1};     % test file
+	gFile = AvenueTe{k,2};     % groundtruth file
 
 	% Anomaly detection
 	[GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...

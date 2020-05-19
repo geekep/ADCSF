@@ -3,9 +3,11 @@ addpath(genpath(strcat(pwd,'/LIB')))
 addpath(genpath(strcat(pwd,'/DATA/LV')))
 addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
 
-load('LVparms.mat');
-
 MISC.dockStyle;
+
+load('LVparms.mat');
+R = cell(size(LVparms,1), 1);
+models = cell(length(R), 1);
 
 %% Train stage
 for k = 1:length(R)
@@ -30,16 +32,15 @@ for k = 1:length(R)
     
     % Model generation
     Mdl = HEAD.genMdlstr(OFbag,FBbag,map);
-    models  = [models, Mdl];
+    models{k} = Mdl;
 
 end
 
 % Save model
-save(models, 'LVMdl.mat')
+save(strcat(pwd,'/DATA/LV/LVMdl.mat'), 'models')
 
 %% Test stage
 load('LVMdl.mat')
-R = cell(size(LVparms,1), 1);
 th = struct;
 th.th_of = 6.5;               % optical flow model threshold
 th.th_fg = 90;                % foreground occupancy model threshold
@@ -49,7 +50,7 @@ for k = 1:length(R)
     File  = LVparms{k,1};      % train&test file
     gFile = LVparms{k,2};      % groundtruth file
     t0    = LVparms{k,3};      % train/test frames
-    Mdl   = LVMdl{k};          % model
+    Mdl   = models{k};         % model struct
 
     visualise = true;
 
