@@ -1,6 +1,6 @@
 %% UCSD
-input_folder = 'D:\UCSD_Anomaly_Dataset.v1p2';
-fileList_gt = dir(fullfile(input_folder, 'UCSDped2\Test', '*_gt'));
+input_folder = 'D:\UCSD_Anomaly_Dataset.v1p2\UCSDped2\Test';
+fileList_gt = dir(fullfile(input_folder, '*_gt'));
 output_folder = 'C:\Users\admin\MATLAB-workspace\ADCSF\DATA\ped2\testing_videos';
 
 for k = 1:length(fileList_gt)
@@ -9,9 +9,9 @@ for k = 1:length(fileList_gt)
     video_gt.FrameRate = 25;
     open(video_gt);
     
-    imageNames = dir(fullfile(input_folder, 'UCSDped2\Test', fileList_gt(k).name, '*.bmp'));
+    imageNames = dir(fullfile(input_folder, fileList_gt(k).name, '*.bmp'));
     for i = 1:length(imageNames)
-        img = imread(fullfile(input_folder, 'UCSDped2\Test', fileList_gt(k).name, imageNames(i).name));
+        img = imread(fullfile(input_folder, fileList_gt(k).name, imageNames(i).name));
         writeVideo(video_gt, img);
     end
     close(video_gt)
