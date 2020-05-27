@@ -161,6 +161,7 @@ classdef PERS
    
    [map,extOF] = PERS.genmap(alpha_,sf);
    %extFB = PERS.genfgext(extOF);
+   % Cell size growing rate is set to 1.06.
    extFB = PERS.cellext(extOF,1.06,vis);
    OFbag = PERS.genbag(map,0);
    FBbag = PERS.genbag(map,numel(extFB));

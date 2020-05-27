@@ -20,7 +20,7 @@ fgbg = VIDEO.getfgbgmask(AvenueTr{1}, 1e-2, 200, visualise);
 n = 0;
 for k = 1:size(AvenueTr,1)
 
-	File = AvenueTr{k};
+	File = fullfile('training_videos', AvenueTr{k});
 	
 	% Feature extraction
 	[OFbag,FBbag,n] = HEAD.extract4VID(File, OFbag, FBbag, ext, n, fgbg, ...
@@ -45,8 +45,8 @@ R = cell(size(AvenueTe,1),1);
 
 for k = 1:length(R)
 
-	File  = AvenueTe{k,1};     % test file
-	gFile = AvenueTe{k,2};     % groundtruth file
+	File  = fullfile('testing_videos', AvenueTe{k,1});   % test file
+	gFile = fullfile('testing_videos', AvenueTe{k,2});   % groundtruth file
 
 	% Anomaly detection
 	[GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...

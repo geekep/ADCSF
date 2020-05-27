@@ -20,7 +20,7 @@ fgbg = VIDEO.getfgbgmask(P2Tr{1},1e-2,200,visualise);
 n = 0;
 for k = 1:size(P2Tr,1)
 
-	File = P2Tr{k};
+	File = fullfile('training_videos', P2Tr{k});
 
 	% Feature extraction	
 	[OFbag,FBbag,n] = HEAD.extract4VID(File, OFbag, FBbag, ext, n, fgbg, ...
@@ -45,8 +45,8 @@ R = cell(size(P2Te,1),1);
 
 for k = 1:length(R)
 
-	File  = P2Te{k,1};     % test file
-	gFile = P2Te{k,2};     % groundtruth file
+	File  = fullfile('testing_videos', P2Te{k,1});     % test file
+	gFile = fullfile('testing_videos', P2Te{k,2});     % groundtruth file
 
 	% Anomaly detection
 	[GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
