@@ -1,7 +1,7 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
 addpath(genpath(strcat(pwd,'/DATA/LV')))
-addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
+addpath(genpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0'))
 
 MISC.dockStyle;
 visualise = true;

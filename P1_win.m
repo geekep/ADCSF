@@ -1,7 +1,7 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
 addpath(genpath(strcat(pwd,'/DATA/ped1')))
-addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
+addpath(genpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0'))
 
 MISC.dockStyle;
 visualise = true;
@@ -11,7 +11,7 @@ load('P1Tr.mat')
 % FG extractor
 % Learning rate is set to 0.02.
 % The number of frames for modeling background is set to 200.
-fgbg = VIDEO.getfgbgmask(P1Tr{11},1e-2,200,visualise);
+fgbg = VIDEO.getfgbgmask(['training_videos\', P1Tr{11}],1e-2,200,visualise);
 
 % Generate active cells
 [ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
@@ -21,10 +21,12 @@ n = 0;
 for k = 1:size(P1Tr,1)
 
 	File = fullfile('training_videos', P1Tr{k});
-
-	% Feature extraction
-	[OFbag,FBbag,n] = HEAD.extract4VID(File,OFbag,FBbag,ext,n,fgbg,1e-3,visualise);
+    disp(File)
     
+    % Feature extraction
+    [OFbag,FBbag,n] = HEAD.extract4VID(File, OFbag, FBbag, ext, n, fgbg, ...
+        1e-3, visualise);
+        
 end
 
 % Model generation

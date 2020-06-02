@@ -100,7 +100,7 @@ classdef HEAD
      
      FBbag = HEAD.encodeFG(Frames.B,FBbag,extFB,n);
      
-     %[FBbag,aM] = HEAD.encodeBag(Frames.B,Frames.O,FBbag,extFB,n);
+%      [FBbag,aM] = HEAD.encodeBag(Frames.B,Frames.O,FBbag,extFB,n);
      
      if vis
       %I = cat(3,I,I,I);
@@ -149,8 +149,8 @@ classdef HEAD
    
    
    if nargin > 8
-    sf = varargin{9};% start frame
-    ef = varargin{10};% end frame
+    sf = varargin{9};     % start frame
+    ef = varargin{10};    % end frame
    else
     sf = 1;
     ef = Inf;

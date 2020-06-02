@@ -1,7 +1,7 @@
 clc
 addpath(genpath(strcat(pwd,'/LIB')))
 addpath(genpath(strcat(pwd,'/DATA/Avenue')))
-addpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0')
+addpath(genpath('C:/Users/admin/Documents/MATLAB/Add-Ons/mexopencv-3.4.0'))
 
 MISC.dockStyle;
 visualise = true;
@@ -11,7 +11,7 @@ load('AvenueTr.mat')
 % FG extractor
 % Learning rate is set to 0.02.
 % The number of frames for modeling background is set to 200.
-fgbg = VIDEO.getfgbgmask(AvenueTr{1}, 1e-2, 200, visualise);
+fgbg = VIDEO.getfgbgmask(['training_videos\',AvenueTr{1}], 1e-2, 200, visualise);
 
 % Generate active cells
 [ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);

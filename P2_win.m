@@ -11,7 +11,7 @@ load('P2Tr.mat')
 % FG extractor
 % Learning rate is set to 0.02.
 % The number of frames for modeling background is set to 200.
-fgbg = VIDEO.getfgbgmask(P2Tr{1},1e-2,200,visualise);
+fgbg = VIDEO.getfgbgmask(fullfile('training_videos',P2Tr{1}),1e-2,200,visualise);
 
 % Generate active cells
 [ext,OFbag,FBbag,map] = PERS.genscan(4,0.02,visualise);
@@ -24,7 +24,7 @@ for k = 1:size(P2Tr,1)
 
 	% Feature extraction	
 	[OFbag,FBbag,n] = HEAD.extract4VID(File, OFbag, FBbag, ext, n, fgbg, ...
-        1e-3,visualise);
+        1e-3, visualise);
 	
 end
 
