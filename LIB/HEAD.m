@@ -9,6 +9,8 @@ classdef HEAD
   min_occ = 0.1;
   scY = 160;
   scX = 240;
+%   scY = 158;
+%   scX = 238;
  end
  
  methods(Static = true)
@@ -258,14 +260,21 @@ classdef HEAD
      
      M_fg = HEAD.maskScoreFG(Frames{5},fgMdl,extFG,extOF);
      
-     
      M_fg = -log(M_fg);
+     imshow(M_fg)
      
      M_of = HEAD.maskScoreOF(xy,Frames{1},Mdl,extOF,mrk);
 
+%      disp(size(M_of))
+%      disp(size(Amap))
+%      if ~isequal(size(Amap), size(M_of))
+%       Amap = padarray(Amap, size(M_of)-size(Amap),'replicate','post');
+%      end
+     
      M_of = M_of .^ Amap;
      
      M_of = -log(M_of);
+     imshow(M_of)
      
      M_fg = M_fg > th_fg;
      
@@ -397,7 +406,9 @@ classdef HEAD
    M_fg = ones(size(extOF));
    B0 = B(:,:,end);
    B0 = B0(:);
+%    disp(B0)
    B = B(:);
+%    disp(size(B))
    
    K = numel(fgMdl);
    
@@ -405,6 +416,7 @@ classdef HEAD
    
    for k = 1:K
     sB = sum(B0(extFG{k}{1}));
+%     sB = sum(B0(extFG{k}{1} <= length(B0)));
     lmdl = fgMdl{k};
     if sB < HEAD.min_occ
      continue
@@ -419,6 +431,7 @@ classdef HEAD
      continue
     end
     sB = B(extFG{k}{2});
+%     sB = B(extFG{k}{2} <= length(B));
     sB = sum(sB);
     pos(k) = HEAD.GMMposterior(sB,lmdl);
    end
@@ -539,14 +552,20 @@ classdef HEAD
   function FGbag = encodeFG(B,FGbag,fbext,n)
    B0 = B(:,:,end);
    B0 = B0(:);
+%    disp(size(B0))
    B = B(:);
+%    disp(size(B))
    for k = 1:numel(fbext)
+%     disp(fbext{k}{1})
     sB = B0(fbext{k}{1});
+%     sB = B0(fbext{k}{1} <= length(B0));
     sB = sum(sB);
     if HEAD.min_occ > sB
      continue
     end
+%     disp(fbext{k}{2})
     sB = B(fbext{k}{2});
+%     sB = B(fbext{k}{2} <= length(B));
     sB = sum(sB);
     FGbag{k}{n} = sB;
    end
@@ -566,11 +585,14 @@ classdef HEAD
   
   function OFbag = encode(xy,O,OFbag,ext,n)
    O = O(:);
+%    disp(size(O))
    for k = 1:size(xy,1)
     if isempty(ext{xy(k,2),xy(k,1)})
      continue
     end
+%     disp(ext{xy(k,2),xy(k,1)}{3})
     sP = O(ext{xy(k,2),xy(k,1)}{3});
+%     sP = O(ext{xy(k,2),xy(k,1)}{3} <= length(O));
     OFbag{xy(k,2),xy(k,1)}{n} = [sum(abs(sP)),mexhof(sP),n];%feature vector;
     
    end

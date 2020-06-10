@@ -4,6 +4,8 @@ classdef PERS
  properties(Constant)
   scY  = 160;
   scX  = 240;
+%   scY  = 158;
+%   scX  = 238;
   fgst = 16;
  end
  

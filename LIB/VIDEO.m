@@ -9,8 +9,14 @@ classdef VIDEO
    flr  = varargin{3};    % frames for learning
    vis  = varargin{4};
    
-   fgbg = cv.BackgroundSubtractorMOG2();
-   
+   fgbg = cv.BackgroundSubtractorMOG();       % [KB2001]
+%    fgbg = cv.BackgroundSubtractorMOG2();    % [Zivkovic2004] and [Zivkovic2006]
+%    fgbg = cv.BackgroundSubtractorKNN();     % [Zivkovic2006]
+%    fgbg = cv.BackgroundSubtractorGMG();     % [Gold2012]
+%    fgbg = cv.BackgroundSubtractorLSBP();    % [LGuo2016]
+%    fgbg = cv.BackgroundSubtractorGSOC();    % This algorithm demonstrates better performance on CDnet 2014 dataset compared to other algorithms in OpenCV.
+%    fgbg = cv.BackgroundSubtractorCNT();     % About as fast as cv.BackgroundSubtractorMOG2 on a high end system. More than twice faster than MOG2 on cheap hardware (benchmarked on Raspberry Pi3).
+
    videoFReader = vision.VideoFileReader(file, 'ImageColorSpace','Intensity');
    step(videoFReader);
    

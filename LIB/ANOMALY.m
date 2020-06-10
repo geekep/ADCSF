@@ -120,15 +120,17 @@ classdef ANOMALY
    labels = [true(numel(TPR),1);false(numel(FPR),1)];
    scores = [TPR;FPR];
    
-   figure
+%    figure
    
    [X,Y,~,AUC] = perfcurve(labels,scores,true);
+   disp(AUC)
    
    plot(X,Y)
+   hold on
+   plot([0,1], [1,0], 'LineStyle','-');
    ylabel('True Positive Rate')
    xlabel('False Positive Rate')
    title('ROC for Abnormal Event Detection')
-   disp(AUC)
    
   end
   
