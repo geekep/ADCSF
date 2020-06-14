@@ -57,11 +57,11 @@ for i = 1:length(th_of)
             File  = fullfile('testing_videos', [P1Te{k,1}(1:2), '.avi']);  % test file                               % test file
             
             % Anomaly detection
-            [GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
+            [GTD,MAD,GAD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
                 th, visualise, fgbg, 1e-3);
             
             % Performance evaluation
-            [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
+            [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,MAD,GAD,CAD,IAD,0.4);
             R{k} = [TPR,FPR];
             
         end

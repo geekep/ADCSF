@@ -83,11 +83,11 @@ for i = 1:length(th_of)
                 1e-3, visualise, 1, t0);
 
             % Anomaly detection
-            [GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, th, true, ...
+            [GTD,MAD,GAD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, th, true, ...
                 fgbg, 1e-3, t0, Inf);
 
             % Performance evaluation
-            [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.2);
+            [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,MAD,GAD,CAD,IAD,0.4);
             R{k} = [TPR,FPR];
 
         end

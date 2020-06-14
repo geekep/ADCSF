@@ -56,11 +56,11 @@ for i = 1:length(th_of)
             gFile = fullfile('testing_videos', P2Te{k,2});     % groundtruth file
 
             % Anomaly detection
-            [GTD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
+            [GTD,MAD,GAD,CAD,IAD] = HEAD.AnomalyDetection(File, gFile, Mdl, ext, ...
                 th, visualise, fgbg, 1e-3);
 
             % Performance evaluation
-            ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
+            ANOMALY.CorrectDetectionRate(GTD,MAD,GAD,CAD,IAD,0.4);
 %             [TPR,FPR] = ANOMALY.CorrectDetectionRate(GTD,CAD,IAD,0.4);
 %             R{k} = [TPR,FPR];
 

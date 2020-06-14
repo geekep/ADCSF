@@ -128,7 +128,7 @@ classdef HEAD
         
         %% Test
         
-        function [GTD,CAD,IAD] = AnomalyDetection(varargin)
+        function [GTD,MAD,GAD,CAD,IAD] = AnomalyDetection(varargin)
             
             file = varargin{1};     % video file name
             gfile= varargin{2};     % video file name GT
@@ -158,9 +158,11 @@ classdef HEAD
                 ef = Inf;
             end
             
-            GTD = zeros(1e5,1);      % groundtruth detected
-            CAD = zeros(1e5,1);      % correct anomaly detected
-            IAD = zeros(1e5,1);      % incorrect anomaly detected
+            GTD = zeros(1e5,1);      % groundtruth area
+            MAD = zeros(1e5,1);      % anomaly detected area
+            GAD = zeros(1e5,1);      % groundtruth and anomaly detected area
+            CAD = zeros(1e5,1);      % correct anomaly detected area
+            IAD = zeros(1e5,1);      % incorrect anomaly detected area
             
             videoFReader1 = vision.VideoFileReader(which(file), 'ImageColorSpace','Intensity');
             step(videoFReader1);
@@ -252,7 +254,7 @@ classdef HEAD
                     
                     % Test via optical flow model
                     xy = detectFASTFeatures(Frames{2}(:,:,3));
-                    xy = xy.selectStrongest(40);
+                    xy = xy.selectStrongest(30);
                     xy = uint16(xy.Location);  
                     Amap = HEAD.ActiveMap(Frames{2}(:,:,3),xy,extOF);
                     M_of = HEAD.maskScoreOF(xy,Frames{1},Mdl,extOF,mrk);
@@ -315,9 +317,12 @@ classdef HEAD
                         J = Frames{4}(:,:,3);
                         x = and(M,J);
                         y = and(M,~J);
-                        GTD(k) = sum(J(:));     % groundtruth
-                        CAD(k) = sum(x(:));     % correct anomaly detected
-                        IAD(k) = sum(y(:));     % incorrect anomaly detected
+                        z = or(M,J);
+                        GTD(k) = sum(J(:));     % groundtruth area
+                        CAD(k) = sum(x(:));     % correct anomaly detected area
+                        IAD(k) = sum(y(:));     % incorrect anomaly detected area
+                        GAD(k) = sum(z(:));     % groundtruth and anomaly detected area
+                        MAD(k) = sum(M(:));     % anomaly detected area
                     else
                         CAD(k) = 1;
                     end
