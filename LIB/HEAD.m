@@ -254,13 +254,14 @@ classdef HEAD
                     
                     % Test via optical flow model
                     xy = detectFASTFeatures(Frames{2}(:,:,3));
-                    xy = xy.selectStrongest(30);
+                    xy = xy.selectStrongest(40);
                     xy = uint16(xy.Location);  
                     Amap = HEAD.ActiveMap(Frames{2}(:,:,3),xy,extOF);
                     M_of = HEAD.maskScoreOF(xy,Frames{1},Mdl,extOF,mrk);
                     M_of = M_of .^ Amap;
                     M_of = -log(M_of);
-                    M_of = M_of > th_of;
+                    imshow(M_of)
+%                     M_of = M_of > th_of;
                     
                     Frames{6} = HEAD.stackFrame(Frames{6},M_of);
                     
@@ -271,9 +272,11 @@ classdef HEAD
                     
                     % Test via foreground model
                     M_fg = HEAD.maskScoreFG(Frames{5},fgMdl,extFG,extOF);
-                    M_fg = -log(M_fg);            
-                    M_fg = M_fg > th_fg;
+                    M_fg = -log(M_fg);
+                    imshow(M_of)
+%                     M_fg = M_fg > th_fg;
                     
+                    scores = M_of + M_fg;
                     Frames{7} = HEAD.stackFrame(Frames{7},M_fg);
                     
                     M_fg = and(Frames{7}(:,:,1),Frames{7}(:,:,2));
@@ -283,7 +286,7 @@ classdef HEAD
                         continue
                     end
                     
-                    M = or(M_of,M_fg);
+%                     M = or(M_of,M_fg);
                     
                     if vis
 %                         M = cat(3,M,M,M);
@@ -313,20 +316,25 @@ classdef HEAD
 %                         imwrite(I,strcat('./DATA/',num2str(k),'.jpg'))
 %                     end
                     
-                    if gtmask
-                        J = Frames{4}(:,:,3);
-                        x = and(M,J);
-                        y = and(M,~J);
-                        z = or(M,J);
-                        GTD(k) = sum(J(:));     % groundtruth area
-                        CAD(k) = sum(x(:));     % correct anomaly detected area
-                        IAD(k) = sum(y(:));     % incorrect anomaly detected area
-                        GAD(k) = sum(z(:));     % groundtruth and anomaly detected area
-                        MAD(k) = sum(M(:));     % anomaly detected area
-                    else
-                        CAD(k) = 1;
-                    end
+                    for i = 1:length(scores)
+                        M_of = M_of > scores(i);
+                        M_fg = M_fg > th_fg;
+                        if gtmask
+                            J = Frames{4}(:,:,3);
+                            x = and(M,J);
+                            y = and(M,~J);
+                            z = or(M,J);
+                            GTD(k) = sum(J(:));     % groundtruth area
+                            CAD(k) = sum(x(:));     % correct anomaly detected area
+                            IAD(k) = sum(y(:));     % incorrect anomaly detected area
+                            GAD(k) = sum(z(:));     % groundtruth and anomaly detected area
+                            MAD(k) = sum(M(:));     % anomaly detected area
+                        else
+                            CAD(k) = 1;
+                        end
                     
+                    end
+                        
                     Ip = In;
                     
                 end

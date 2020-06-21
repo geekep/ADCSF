@@ -106,42 +106,46 @@ classdef ANOMALY
         function [TPR,FPR] = CorrectDetectionRate(GTD,MAD,GAD,CAD,IAD,th)
             
             % Frame-level evaluation criterion
+            TP = sum(and(MAD > 0,GTD > 0));
+            FN = sum(GTD > 0) - TP;
+            FP = sum(MAD > 0) - TP;
+            TN = sum(GTD == 0) - FP;
+            TPR = TP/(TP+FN+eps);
+            FPR = FP/(FP+TN+eps);
             
             % Pixel-level evaluation criterion
 %             TP = sum(CAD >= th * GTD + eps);
-%             FN = numel(GTD) - TP;
-%             FP = sum(and(GTD == 0, IAD > 0));
-%             TN = numel(GTD) - FP;
+%             FN = sum(GTD > 0) - TP;
+%             FP = sum(MAD > 0) - TP;
+%             TN = sum(GTD == 0) - FP;
 %             TPR = TP/(TP+FN+eps);
 %             FPR = FP/(FP+TN+eps);
             
             % Object-level evaluation criterion
-            TP = sum(CAD >= th * GAD + eps);
-            FN = numel(GTD > 0) - TP;
-            FP = numel(MAD > 0) - TP;
-            TN = numel(GTD == 0) - FP;
-            TPR = TP/(TP+FN+eps);
-            FPR = FP/(FP+TN+eps);
+%             TP = sum(CAD >= th * GAD + eps);
+%             FN = sum(GTD > 0) - TP;
+%             FP = sum(MAD > 0) - TP;
+%             TN = sum(GTD == 0) - FP;
+%             TPR = TP/(TP+FN+eps);
+%             FPR = FP/(FP+TN+eps);
             
         end
         
         function AUC = ROCanalysis(TPR,FPR)
             
-            plot(FPR,FPR)
+            labels = [true(numel(TPR),1);false(numel(FPR),1)];
+            scores = [TPR;FPR];
             
-%             labels = [true(numel(TPR),1);false(numel(FPR),1)];
-%             scores = [TPR;FPR];
-%             
-%             
-%             [X,Y,~,AUC] = perfcurve(labels,scores,true);
-%             disp(AUC)
-%             
-%             plot(X,Y)
-%             hold on
-%             plot([0,1], [1,0], 'LineStyle','-');
-%             ylabel('True Positive Rate')
-%             xlabel('False Positive Rate')
-%             title('ROC for Abnormal Event Detection')
+            
+            [X,Y,~,AUC] = perfcurve(labels,scores,true);
+            disp(AUC)
+            
+            plot(X,Y)
+            hold on
+            plot([0,1], [1,0], 'LineStyle','-')
+            ylabel('True Positive Rate')
+            xlabel('False Positive Rate')
+            title('ROC for Abnormal Event Detection')
             
         end
         
